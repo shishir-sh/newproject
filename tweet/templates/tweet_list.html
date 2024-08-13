@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>{% extends "layout.html" %}
+
+{% block title %}
+
+<h1>Blog</h1>
+
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-4, .text-primary">Blog Post</h1>
+
+
+
+<a class="btn btn-primary" href="{% url 'tweet_create' %}">Create Tweet</a>
+<div class="container row gap-3">
+    {% for tweet in tweets %} 
+    <div class="card" style="width: 18rem;">
+        {% if tweet.photo %}
+            <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image">
+        {% else %}
+            <img src="/path/to/default/image.jpg" class="card-img-top" alt="Default Image">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title">{{tweet.user.username}}</h5>
+          <p class="card-text"> {{tweet.text}} </p>
+          {% if tweet.user == user %}
+          <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+          {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
